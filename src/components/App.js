@@ -6,6 +6,8 @@ const months = [
   "September", "October", "November", "December"
 ];
 
+const weekDays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
 const App = () => {
   const today = new Date();
 
@@ -17,10 +19,10 @@ const App = () => {
   const daysInMonth = new Date(year, monthIndex + 1, 0).getDate();
   const days = Array.from({ length: daysInMonth }, (_, i) => i + 1);
 
+  // ❗ NO YEAR CHANGE ON MONTH WRAP
   const prevMonth = () => {
     if (monthIndex === 0) {
-      setMonth("December");
-      setYear(year - 1);
+      setMonth("November");
     } else {
       setMonth(months[monthIndex - 1]);
     }
@@ -29,7 +31,6 @@ const App = () => {
   const nextMonth = () => {
     if (monthIndex === 11) {
       setMonth("January");
-      setYear(year + 1);
     } else {
       setMonth(months[monthIndex + 1]);
     }
@@ -51,7 +52,7 @@ const App = () => {
         ))}
       </select>
 
-      {/* Year display / input */}
+      {/* Year */}
       {!editYear ? (
         <span
           id="year"
@@ -70,7 +71,7 @@ const App = () => {
         />
       )}
 
-      {/* Navigation Buttons */}
+      {/* Navigation */}
       <div>
         <button id="prev-month" onClick={prevMonth}>Prev Month</button>
         <button id="next-month" onClick={nextMonth}>Next Month</button>
@@ -80,6 +81,13 @@ const App = () => {
 
       {/* Calendar Table */}
       <table id="calendar-table">
+        <thead>
+          <tr>
+            {weekDays.map((d) => (
+              <th key={d}>{d}</th>
+            ))}
+          </tr>
+        </thead>
         <tbody>
           <tr>
             {days.map((d) => (
