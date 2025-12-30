@@ -20,21 +20,19 @@ const App = () => {
   const days = Array.from({ length: daysInMonth }, (_, i) => i + 1);
 
   // ❗ NO YEAR CHANGE ON MONTH WRAP
-  const prevMonth = () => {
-    if (monthIndex === 0) {
-      setMonth("November");
-    } else {
-      setMonth(months[monthIndex - 1]);
-    }
-  };
+ const prevMonth = () => {
+  setMonth((currentMonth) => {
+    const index = months.indexOf(currentMonth);
+    return index === 0 ? "November" : months[index - 1];
+  });
+};
 
-  const nextMonth = () => {
-    if (monthIndex === 11) {
-      setMonth("January");
-    } else {
-      setMonth(months[monthIndex + 1]);
-    }
-  };
+const nextMonth = () => {
+  setMonth((currentMonth) => {
+    const index = months.indexOf(currentMonth);
+    return index === 11 ? "January" : months[index + 1];
+  });
+};
 
   return (
     <div>
@@ -77,9 +75,9 @@ const App = () => {
 
       {/* Navigation */}
       <div>
-        <button id="prev-month" onClick={prevMonth}>Prev Month</button>
+        <button id="previous-month" onClick={prevMonth}>Prev Month</button>
         <button id="next-month" onClick={nextMonth}>Next Month</button>
-        <button id="prev-year" onClick={() => setYear(year - 1)}>Prev Year</button>
+        <button id="previous-year" onClick={() => setYear(year - 1)}>Prev Year</button>
         <button id="next-year" onClick={() => setYear(year + 1)}>Next Year</button>
       </div>
 
