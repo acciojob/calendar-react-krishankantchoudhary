@@ -20,19 +20,43 @@ const App = () => {
   const days = Array.from({ length: daysInMonth }, (_, i) => i + 1);
 
   // ❗ NO YEAR CHANGE ON MONTH WRAP
- const prevMonth = () => {
+const prevMonth = () => {
   setMonth((currentMonth) => {
-    const index = months.indexOf(currentMonth);
-    return index === 0 ? "November" : months[index - 1];
+    if (currentMonth === "January") return "November";
+    if (currentMonth === "February") return "January";
+    if (currentMonth === "March") return "February";
+    if (currentMonth === "April") return "March";
+    if (currentMonth === "May") return "April";
+    if (currentMonth === "June") return "May";
+    if (currentMonth === "July") return "June";
+    if (currentMonth === "August") return "July";
+    if (currentMonth === "September") return "August";
+    if (currentMonth === "October") return "September";
+    if (currentMonth === "November") return "October";
+    if (currentMonth === "December") return "November";
+    return currentMonth;
   });
 };
 
+
 const nextMonth = () => {
   setMonth((currentMonth) => {
-    const index = months.indexOf(currentMonth);
-    return index === 11 ? "January" : months[index + 1];
+    if (currentMonth === "January") return "February";
+    if (currentMonth === "February") return "March";
+    if (currentMonth === "March") return "April";
+    if (currentMonth === "April") return "May";
+    if (currentMonth === "May") return "June";
+    if (currentMonth === "June") return "July";
+    if (currentMonth === "July") return "August";
+    if (currentMonth === "August") return "September";
+    if (currentMonth === "September") return "October";
+    if (currentMonth === "October") return "November";
+    if (currentMonth === "November") return "December";
+    if (currentMonth === "December") return "January";
+    return currentMonth;
   });
 };
+
 
   return (
     <div>
@@ -75,10 +99,10 @@ const nextMonth = () => {
 
       {/* Navigation */}
       <div>
-        <button id="previous-month" onClick={prevMonth}>Prev Month</button>
-        <button id="next-month" onClick={nextMonth}>Next Month</button>
-        <button id="previous-year" onClick={() => setYear(year - 1)}>Prev Year</button>
-        <button id="next-year" onClick={() => setYear(year + 1)}>Next Year</button>
+        <button id="previous-month" onClick={prevMonth}>&lt;</button>
+        <button id="next-month" onClick={nextMonth}>&gt;</button>
+        <button id="previous-year" onClick={() => setYear(year - 1)}>&lt;&lt;</button>
+        <button id="next-year" onClick={() => setYear(year + 1)}>&gt;&gt;</button>
       </div>
 
       {/* Calendar Table */}
