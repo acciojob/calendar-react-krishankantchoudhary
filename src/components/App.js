@@ -9,98 +9,81 @@ const months = [
 const App = () => {
   const today = new Date();
 
-  const [month, setMonth] = useState(today.getMonth());
+  const [month, setMonth] = useState(months[today.getMonth()]);
   const [year, setYear] = useState(today.getFullYear());
-  const [isEditingYear, setIsEditingYear] = useState(false);
+  const [editYear, setEditYear] = useState(false);
 
-  // number of days in selected month & year
-  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  const monthIndex = months.indexOf(month);
+  const daysInMonth = new Date(year, monthIndex + 1, 0).getDate();
+  const days = Array.from({ length: daysInMonth }, (_, i) => i + 1);
 
-  // generate days array
-  const daysArray = Array.from({ length: daysInMonth }, (_, i) => i + 1);
-
-  // month navigation
   const prevMonth = () => {
-    if (month === 0) {
-      setMonth(11);
+    if (monthIndex === 0) {
+      setMonth("December");
       setYear(year - 1);
     } else {
-      setMonth(month - 1);
+      setMonth(months[monthIndex - 1]);
     }
   };
 
   const nextMonth = () => {
-    if (month === 11) {
-      setMonth(0);
+    if (monthIndex === 11) {
+      setMonth("January");
       setYear(year + 1);
     } else {
-      setMonth(month + 1);
+      setMonth(months[monthIndex + 1]);
     }
   };
 
   return (
     <div>
       {/* Heading */}
-      <h1 id="calendar-heading">Calendar</h1>
+      <h1 id="heading">Calendar</h1>
 
       {/* Month Dropdown */}
       <select
-        id="month-select"
+        id="month"
         value={month}
-        onChange={(e) => setMonth(Number(e.target.value))}
+        onChange={(e) => setMonth(e.target.value)}
       >
-        {months.map((m, index) => (
-          <option key={index} value={index}>
-            {m}
-          </option>
+        {months.map((m) => (
+          <option key={m} value={m}>{m}</option>
         ))}
       </select>
 
-      {/* Year Display / Edit */}
-      {!isEditingYear ? (
+      {/* Year display / input */}
+      {!editYear ? (
         <span
-          id="year-text"
-          onDoubleClick={() => setIsEditingYear(true)}
-          style={{ marginLeft: "10px", cursor: "pointer" }}
+          id="year"
+          onDoubleClick={() => setEditYear(true)}
         >
           {year}
         </span>
       ) : (
         <input
-          id="year-input"
+          id="year-text-box"
           type="number"
           value={year}
           onChange={(e) => setYear(Number(e.target.value))}
-          onBlur={() => setIsEditingYear(false)}
+          onBlur={() => setEditYear(false)}
           autoFocus
         />
       )}
 
       {/* Navigation Buttons */}
       <div>
-        <button id="prev-month" onClick={prevMonth}>
-          Prev Month
-        </button>
-
-        <button id="next-month" onClick={nextMonth}>
-          Next Month
-        </button>
-
-        <button id="prev-year" onClick={() => setYear(year - 1)}>
-          Prev Year
-        </button>
-
-        <button id="next-year" onClick={() => setYear(year + 1)}>
-          Next Year
-        </button>
+        <button id="prev-month" onClick={prevMonth}>Prev Month</button>
+        <button id="next-month" onClick={nextMonth}>Next Month</button>
+        <button id="prev-year" onClick={() => setYear(year - 1)}>Prev Year</button>
+        <button id="next-year" onClick={() => setYear(year + 1)}>Next Year</button>
       </div>
 
       {/* Calendar Table */}
-      <table id="calendar-table" border="1">
+      <table id="calendar-table">
         <tbody>
           <tr>
-            {daysArray.map((day) => (
-              <td key={day}>{day}</td>
+            {days.map((d) => (
+              <td key={d}>{d}</td>
             ))}
           </tr>
         </tbody>
