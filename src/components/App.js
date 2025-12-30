@@ -52,24 +52,28 @@ const App = () => {
         ))}
       </select>
 
-      {/* Year */}
-      {!editYear ? (
-        <span
-          id="year"
-          onDoubleClick={() => setEditYear(true)}
-        >
-          {year}
-        </span>
-      ) : (
-        <input
-          id="year-text-box"
-          type="number"
-          value={year}
-          onChange={(e) => setYear(Number(e.target.value))}
-          onBlur={() => setEditYear(false)}
-          autoFocus
-        />
-      )}
+      <span
+  id="year"
+  onDoubleClick={() => setEditYear(true)}
+  style={{ display: editYear ? "none" : "inline" }}
+>
+  {year}
+</span>
+
+<input
+  id="year-text-box"
+  type="number"
+  value={year}
+  style={{ display: editYear ? "inline" : "none" }}
+  onChange={(e) => setYear(Number(e.target.value))}
+  onBlur={() => setEditYear(false)}
+  onKeyDown={(e) => {
+    if (e.key === "Enter") {
+      setEditYear(false);
+    }
+  }}
+/>
+
 
       {/* Navigation */}
       <div>
@@ -81,14 +85,14 @@ const App = () => {
 
       {/* Calendar Table */}
       <table id="calendar-table">
-        <thead>
+         <tbody>
           <tr>
             {weekDays.map((d) => (
-              <th key={d}>{d}</th>
+              <td key={d}>{d}</td>
             ))}
           </tr>
-        </thead>
-        <tbody>
+        
+       
           <tr>
             {days.map((d) => (
               <td key={d}>{d}</td>
